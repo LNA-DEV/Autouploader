@@ -10,6 +10,7 @@ import requests
 
 PIXELFED_INSTANCE_URL = 'https://pixelfed.de'
 PAT = os.environ.get('PIXELFED_PAT')
+API_KEY = os.environ.get('API_KEY')
 
 # Function to filter entries based on the name list
 def filter_entries(entries, name_list):
@@ -29,7 +30,7 @@ def get_already_uploaded_items():
         return None
 
 def published_entry(entry_name):
-    requests.post(f"https://api.lna-dev.net/autouploader/pixelfed?item={entry_name}")
+    requests.post(f"https://api.lna-dev.net/autouploader/pixelfed?item={entry_name}", headers={"Authorization", f"ApiKey {API_KEY}"})
 
 def download_image(image_url):
     response = requests.get(image_url)
