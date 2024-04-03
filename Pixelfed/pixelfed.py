@@ -24,10 +24,10 @@ def get_already_uploaded_items():
             return string_list
         else:
             print(f"Failed to fetch data from API. Status code: {response.status_code}")
-            return None
+            sys.exit(1)
     except Exception as e:
         print(f"An error occurred: {e}")
-        return None
+        sys.exit(1)
 
 def published_entry(entry_name):
     requests.post(f"https://api.lna-dev.net/autouploader/pixelfed?item={entry_name}", headers={"Authorization": f"ApiKey {API_KEY}"})
@@ -38,7 +38,7 @@ def download_image(image_url):
         return BytesIO(response.content)
     else:
         print("Failed to download image!")
-        return None
+        sys.exit(1)
 
 def publish_entry(entry):
     caption = "More at https://photo.lna-dev.net\n\n"
@@ -68,7 +68,7 @@ def upload_media(entry):
         return response.json()['id']
     else:
         print("Failed to upload media.")
-        sys.exit()
+        sys.exit(1)
 
 def publish_post(caption, media_id):
     if caption.strip():
@@ -86,10 +86,10 @@ def publish_post(caption, media_id):
             print("Post published successfully!")
         else:
             print("Failed to publish post!")
-            sys.exit()
+            sys.exit(1)
     else:
         print("Caption cannot be empty.")
-        sys.exit()
+        sys.exit(1)
 
 # Parse the RSS feed
 feed_url = 'https://photo.lna-dev.net/index.xml'
