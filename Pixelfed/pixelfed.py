@@ -30,7 +30,7 @@ def get_already_uploaded_items():
         return None
 
 def published_entry(entry_name):
-    requests.post(f"https://api.lna-dev.net/autouploader/pixelfed?item={entry_name}", headers={"Authorization", f"ApiKey {API_KEY}"})
+    requests.post(f"https://api.lna-dev.net/autouploader/pixelfed?item={entry_name}", headers={"Authorization": f"ApiKey {API_KEY}"})
 
 def download_image(image_url):
     response = requests.get(image_url)
