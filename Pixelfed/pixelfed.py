@@ -14,6 +14,10 @@ API_KEY = os.environ.get('API_KEY')
 
 # Function to filter entries based on the name list
 def filter_entries(entries, name_list):
+
+    # Temp skips (for example if this image does not fit currently)
+    name_list.append("P1002496.JPG")
+
     return [entry for entry in entries if entry.title not in name_list]
 
 def get_already_uploaded_items():
