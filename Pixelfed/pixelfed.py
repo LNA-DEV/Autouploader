@@ -62,7 +62,7 @@ def upload_media(entry):
         'Accept': 'application/json'
     }
     files = {
-        'file': download_image(entry.link)
+        'file': download_image(entry.media_content[0]["url"])
     }
     data = {
         'description': re.search('alt="(.*?)"', entry.summary).group(1)
@@ -71,6 +71,7 @@ def upload_media(entry):
     if response.status_code == 200:
         return response.json()['id']
     else:
+        print("Response text: " + response.text)
         print("Failed to upload media.")
         sys.exit(1)
 
