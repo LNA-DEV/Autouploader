@@ -16,7 +16,7 @@ API_KEY = os.environ.get('API_KEY')
 def filter_entries(entries, name_list):
 
     # Temp skips (for example if this image does not fit currently)
-    name_list.append("P1002496.JPG")
+    # name_list.append("P1002496.JPG")
 
     return [entry for entry in entries if entry.title not in name_list]
 
@@ -45,7 +45,7 @@ def download_image(image_url):
         sys.exit(1)
 
 def publish_entry(entry):
-    caption = "More at https://photo.lna-dev.net\n\n"
+    caption = "More at https://lna-dev.net/en/gallery\n\n"
 
     for element in entry.tags:
         caption += '#' + element.term + " "
@@ -97,7 +97,7 @@ def publish_post(caption, media_id):
         sys.exit(1)
 
 # Parse the RSS feed
-feed_url = 'https://photo.lna-dev.net/index.xml'
+feed_url = 'https://lna-dev.net/en/gallery/index.xml'
 feed = feedparser.parse(feed_url)
 
 # Filter out entries with specific names
