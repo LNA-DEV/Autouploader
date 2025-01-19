@@ -10,8 +10,8 @@ import requests
 from atproto import Client
 from atproto import client_utils
 
-BLUESKY_PAT = 'BLUESKY_PAT'
-API_KEY = 'API_KEY'
+BLUESKY_PAT = os.environ.get('BLUESKY_PAT')
+API_KEY = os.environ.get('API_KEY')
 
 bsClient = Client()
 bsClient.login(
