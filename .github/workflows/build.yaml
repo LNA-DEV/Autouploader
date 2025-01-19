@@ -6,11 +6,8 @@ on:
   push:
     branches: [main]
 
-env:
-  CONTAINER-NAME: pixelfed-autoupload
-
 jobs:
-  ReleaseVersion:
+  ReleaseVersionPixelfed:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +21,26 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build the Docker image
-        run: docker build ./Pixelfed --tag lnadev/${{ env.CONTAINER-NAME }}:${{ github.run_number }}
+        run: docker build ./Pixelfed --tag lnadev/pixelfed-autoupload:${{ github.run_number }}
 
       - name: Push the image to dockerhub
-        run: docker push lnadev/${{ env.CONTAINER-NAME }}:${{ github.run_number }}
+        run: docker push lnadev/pixelfed-autoupload:${{ github.run_number }}
+
+  ReleaseVersionBluesky:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build the Docker image
+        run: docker build ./Bluesky --tag lnadev/bluesky-autoupload:${{ github.run_number }}
+
+      - name: Push the image to dockerhub
+        run: docker push lnadev/bluesky-autoupload:${{ github.run_number }}
