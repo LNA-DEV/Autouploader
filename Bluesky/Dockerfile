@@ -7,5 +7,6 @@ COPY . /app
 
 RUN pip install feedparser
 RUN pip install requests
+RUN pip install atproto
 
 CMD ["python", "bluesky.py"]
