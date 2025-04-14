@@ -58,8 +58,13 @@ def publish_entry(entry):
     caption.text("\n\n")
 
     for element in entry.tags:
-        caption.tag("#" + element.term, element.term)
-        caption.text(" ")
+        tag_text = "#" + element.term
+        
+        # Check if adding the tag and a space would exceed 300 characters
+        charCount = len(caption.build_text() + tag_text + " ")
+        if charCount <= 300:
+            caption.tag(tag_text, element.term)
+            caption.text(" ")
 
     media_url = entry.media_content[0]["url"]
     alt_text = re.search('alt="(.*?)"', entry.summary)
