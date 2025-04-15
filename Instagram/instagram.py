@@ -32,6 +32,11 @@ def publish_container(creation_id='', instagram_account_id='', access_token=''):
     response = requests.post(url, params=param)
     return response.json()
 
+def check_media_status(creation_id, access_token):
+    url = f"{graph_url}/{creation_id}?fields=status_code&access_token={access_token}"
+    response = requests.get(url)
+    return response.json()
+
 # Function to filter entries based on the name list
 def filter_entries(entries, name_list):
 
@@ -83,6 +88,22 @@ def publish_entry(entry):
         return
 
     creation_id = creation_response["id"]
+
+    # Wait for the media to be processed
+    max_retries = 10
+    for attempt in range(max_retries):
+        status_response = check_media_status(creation_id, INSTAGRAM_ACCESS_TOKEN)
+        status = status_response.get("status_code")
+        
+        print(f"Attempt {attempt+1}: Status = {status}")
+        
+        if status == "FINISHED":
+            break
+        time.sleep(2)  # Wait 2 seconds before trying again
+    else:
+        print("Media was not ready after waiting. Exiting.")
+        return
+
     publish_response = publish_container(
         creation_id=creation_id,
         instagram_account_id=INSTAGRAM_ACCOUNT_ID,
